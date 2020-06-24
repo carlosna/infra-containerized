@@ -1,0 +1,34 @@
+- name: Install k3s
+  shell: "curl -sfL https://get.k3s.io | sh -"
+  args:
+    creates: /usr/local/bin/k3s-uninstall.sh
+
+- name: Wait for k3s.yml
+  wait_for: 
+    path: /etc/rancher/k3s/k3s.yaml
+
+- name: Modify k3s service parameter
+  become: yes 
+  replace:
+    path: /etc/systemd/system/k3s.service
+    regexp: 'server (.+)?\\'
+    replace: 'server --write-kubeconfig-mode 644 \\'
+
+- name: Reload and restart k3s service
+  become: yes
+  systemd:
+    name: k3s
+    state: restarted
+    daemon_reload: yes
+
+- name: Create .kube dir
+  file: 
+    path: /root/.kube
+    state: directory
+
+- name: Copy kubeconfig to default kubectl dir
+  copy: 
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: "/{{ ansible_user_id }}/.kube/config"
+    remote_src: yes
+    owner: "{{ ansible_user_id }}"

@@ -1,0 +1,5 @@
+---
+# handlers file for k3s
+#
+- name: Helm install
+  include: helm.yml

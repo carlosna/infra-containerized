@@ -1,0 +1,14 @@
+resources:
+  memory: 4096
+  cpus: 2
+
+rancher:
+  forward_ports: true
+  host_http_port: 8080
+  host_https_port: 4443
+
+ansible: 
+  # Specify how verbose ansible is by setting one or more "v" characters (equal to -v, -vv etc). Empty string means no verbose output.
+  verbose_args: "true"
+
+insert_ssh_key: true

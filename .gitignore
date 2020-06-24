@@ -1,0 +1,4 @@
+.vagrant
+*.log
+*.retry
+vars-dev.yml

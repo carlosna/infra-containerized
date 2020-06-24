@@ -1,0 +1,6 @@
+---
+# vars file for k3s
+
+cert_manager_namespace: kube-system
+rancher_namespace: cattle-system
+

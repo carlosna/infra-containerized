@@ -1,0 +1,37 @@
+---
+# tasks file for k3s
+
+- name: Install dependencies
+  apt:
+    name:
+      - python3
+      - python3-pip
+      - python3-setuptools
+    state: latest
+    update_cache: True
+
+- name: Install required pip packages
+  pip:
+    name:
+      - argparse
+      - bleach
+      - requests-toolbelt
+    executable: pip3
+
+- name: General Python dependencies
+  pip:
+    name:
+    - setuptools
+    - docker-py
+    # k8s_module 
+    - openshift >= 0.6
+    - PyYAML >= 3.11
+
+- name: k3s install
+  include: k3s.yml
+
+- name: Helm install
+  include: helm.yml
+
+- name: rancher install
+  include: rancher.yml
