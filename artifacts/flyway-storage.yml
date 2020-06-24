@@ -1,0 +1,31 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: flyway-pv-volume
+  namespace: migration
+  labels:
+    type: local
+    app: flyway
+spec:
+  storageClassName: longhorn
+  capacity:
+    storage: 50Mi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/flyway"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: flyway-pv-claim
+  namespace: migration
+  labels:
+    app: flyway
+spec:
+  storageClassName: longhorn
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Mi
